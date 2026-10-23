@@ -1,0 +1,132 @@
+<div align="center">
+
+# 🚀 3D Portfolio
+
+**A developer portfolio you can actually play with.** Press keys on a 3D keyboard, watch other visitors' cursors fly by, and chat with whoever's online.
+
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Next.js 16](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)
+
+</div>
+
+> This portfolio is open source under the license noted below.
+
+## ✨ Features
+
+- **Interactive 3D Keyboard** — Programmatically generated Chibi keyboard where each keycap represents a skill, revealing titles and descriptions on hover/press.
+- **Live Multiplayer** — See other visitors' cursors in realtime, who's online, and chat with them ([details](#-realtime-features-optional))
+- **Buttery Animations** — GSAP + Framer Motion powered scroll, hover, and reveal animations
+- **Space Theme** — Floating particles on a dark canvas for a cosmic vibe
+- **Easter Eggs** — Open DevTools and follow the clues 🐱
+- **Light & Dark Mode** — Full theme support with cheeky disclaimer toasts
+- **Responsive** — Works across all screen sizes
+- **Contact Form** — Email delivery via Resend
+- **Analytics** _(optional)_ — Umami analytics integration
+
+## 🛠️ Tech Stack
+
+| Layer | Technologies |
+|---|---|
+| **Framework** | Next.js 16.2.2, React 19.2.4, TypeScript |
+| **Styling** | Tailwind CSS, Shadcn UI, Aceternity UI |
+| **Animation** | GSAP, Framer Motion |
+| **3D** | @chibi3d/runtime, Three.js, React Three Fiber |
+| **Email** | Resend |
+| **Misc** | Lenis (smooth scroll), Zod, next-themes |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 20.9+ for Next.js 16; use a current LTS release with pnpm 11
+- pnpm 11.20.0
+
+### Installation
+
+1. **Open this project folder in a terminal.**
+
+2. **Install dependencies** using the pinned pnpm version:
+
+    ```bash
+    pnpm install
+    ```
+
+3. **Set up environment variables:**
+
+    Copy `.env.example` to `.env.local` and configure only the services you plan to use. See [SETUP_GUIDE.md](SETUP_GUIDE.md) for details.
+
+4. **Run the development server:**
+
+    ```bash
+    pnpm dev
+    ```
+
+5. Open [http://localhost:3000](http://localhost:3000) and see the magic ✨
+
+---
+
+## Code checks
+
+Run these before opening a pull request:
+
+```bash
+pnpm lint
+pnpm typecheck
+```
+
+Next.js 16 no longer runs lint during builds. The ESLint CLI uses `eslint.config.mjs`. New React Compiler diagnostics for refs, immutability, effect state updates, and manual memoization report warnings while existing animation and realtime components are migrated. Hook ordering violations remain errors.
+
+Blog frontmatter requires a title, summary, and `publishedAt` date in `YYYY-MM-DD` format. Optional fields are `image`, `author`, and a list of `tags`. Invalid frontmatter raises a content error; unknown blog slugs return a 404.
+
+Files under `public/assets` can be replaced at the same URL and cache for one hour before revalidation. Next.js content-hashed static assets retain immutable caching.
+
+---
+
+## 🎨 Make It Your Own
+
+Personal details live in [`src/data/config.ts`](src/data/config.ts), skills and experience in [`src/data/constants.ts`](src/data/constants.ts), and project cards in [`src/data/projects.tsx`](src/data/projects.tsx).
+
+The portfolio domain is intentionally unset until you configure your own domain. Without one, canonical URLs and the sitemap host are omitted.
+
+---
+
+## ⌨️ Customize the 3D keyboard
+
+Apply keyboard colors and icons in `SKILLS` in [`src/data/constants.ts`](src/data/constants.ts):
+
+- `keyboardColor`: keycap color, such as `"#ff9408"`.
+- `keyboardIcon`: copy an SVG URL from [thesvg.org](https://thesvg.org) and paste it here. You can also use a local file under `public/assets/keyboard/logos/`.
+- `label` and `shortDescription`: text shown when interacting with a key.
+- `shortcut`: optional physical key code, such as `"KeyQ"`. Keep shortcuts unique; defaults follow QWERTY letter order.
+
+The demo accepts logo names too, but `keyboardIcon` needs an image URL or local asset path. Without keyboard overrides, keys use the skill's `color` and `icon`.
+
+Keys follow the order of `SKILLS`. To change the default six columns, pass a second argument to `createKeyboardScene` in [`keyboard-scene.tsx`](src/components/keyboard/keyboard-scene.tsx). Rows adjust automatically to the skill count.
+
+---
+
+## 🔌 Realtime Features (Optional)
+
+The portfolio supports optional realtime features powered by a **separate backend API**:
+
+- 🖱️ **Live cursors** — See other visitors' cursors in realtime
+- 👥 **Online presence** — Shows who's currently on the site
+- 💬 **Chat** — Live chat between visitors
+
+These features activate automatically when the `NEXT_PUBLIC_WS_URL` environment variable is set. Without it, the portfolio works perfectly fine as a static site — no realtime features, no backend dependency.
+
+---
+
+## 🤝 Contributing
+
+If you'd like to contribute or suggest improvements, feel free to open an issue or submit a pull request. All contributions are welcome!
+
+---
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+For local setup, environment configuration, and code checks, see [SETUP_GUIDE.md](SETUP_GUIDE.md).
